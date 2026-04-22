@@ -1,28 +1,24 @@
-# Project Title
+# STAT 184 Homework 4.4
 
-Write a 1-2 sentences that quickly and clearly convey what your repo is for.
+This repo is to practice using GitHub by creating issues, commit messages, new branches, add files, etc.
 
 ## Overview
 
-Expand on those introductory sentences with a brief but informative description of your project's purpose and goals. This section should help visitors decide whether they should dig deeper into your repo/project.
-
-### Interesting Insight (Optional)
-
-This is optional but highly recommended. You'll include one interesting insight from your project as part of the README. This insight is most effective when you include a visual. Keep in mind that this visual must be included as an image file (e.g., JPG, PNG, etc.). You can export plots created with `{ggplot2}` by using the function `ggsave`.
+The goal and purpose of this assignment is to successfully utilize GitHub's features.
 
 ## Data Sources and Acknowledgements
 
-Be sure to list where you got any data used within the project. Be sure to acknowledge any one whose work or elements you're drawing upon.
+All the sources used for this assignment is from the course STAT 184 and are my own (Jin) coding projects.
 
 ## Current Plan
 
-Provide some information about what you intend to doe with the project. You can additionally refer the visitor to your detailed plan document.
+I intend to use the GitHub to test their features and add my homework 4.3 file.
 
 ## Repo Structure
 
-Use this section to explain the structure of your repo. This should help visitors quickly figure out where they should look to find certain elements. Further, you can use this space to highlight and briefly explain important/key files in the repo.
-
+All the main code is in main, and I will be using dev_Jin as my branch to edit my project.
 
 ## Authors
 
-Give information about who are the authors of the project and how people can get in touch if they have questions.
+Jin Won
+email: jbw6513@psu.edu
