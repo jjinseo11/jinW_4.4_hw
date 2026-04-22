@@ -21,5 +21,4 @@ flipCoin <- function(probHeads = 0.5){
   return(resultFlip)
 }
 
-# Run my function
-# Test my function
+
