@@ -1,0 +1,194 @@
+---
+title: "STAT 184 HW 4.3"
+author: "Jin Won"
+date: "April 13, 2026"
+date-modified: now
+format: docx
+execute:
+  echo: false
+  warning: false
+---
+
+## Busiest Airports Analysis
+
+
+```{r}
+# Step 1: Load Packages
+
+library(tidyverse)
+library(rvest)
+library(ggrepel)
+
+# Step 2: Load & Get Data
+# URL: https://en.wikipedia.org/wiki/List_of_busiest_airports_by_passenger_traffic
+# ATL, FRA, PKX, & Three More
+
+
+# Step 3: Tidy the data
+
+airportsRawData <- read_html(
+  x = "https://en.wikipedia.org/wiki/List_of_busiest_airports_by_passenger_traffic"
+) |>
+  html_elements(css = "table") |>
+  html_table()
+  
+# Get data from each year (2020-2025)
+airportsData2025 <- airportsRawData[[2]] |>
+  select(Airport, Totalpassengers) |> # Select the needed columns
+  mutate(Totalpassengers = readr::parse_number(Totalpassengers),# Convert to numbers
+         year = 2025 ) |> # Add year column
+  filter(Airport == "Frankfurt Airport" | Airport == "Beijing Daxing International Airport" | Airport == "Hartsfield-Jackson Atlanta International Airport" | Airport == "Singapore Changi Airport" | Airport == "Seoul Incheon International Airport" | Airport == "Hamad International Airport")
+
+
+airportsData2024 <- airportsRawData[[3]] |>
+  select(Airport, Totalpassengers) |>
+  mutate(Totalpassengers = readr::parse_number(Totalpassengers),
+         year = 2024) |>
+  filter(Airport == "Frankfurt Airport" | Airport == "Beijing Daxing International Airport" | Airport == "Hartsfield-Jackson Atlanta International Airport" | Airport == "Singapore Changi Airport" | Airport == "Seoul Incheon International Airport" | Airport == "Hamad International Airport")
+
+airportsData2023 <- airportsRawData[[4]] |>
+  select(Airport, Totalpassengers) |>
+  mutate(Totalpassengers = readr::parse_number(Totalpassengers),
+         year = 2023) |>
+  filter(Airport == "Frankfurt Airport" | Airport == "Beijing Daxing International Airport" | Airport == "Hartsfield-Jackson Atlanta International Airport" | Airport == "Singapore Changi Airport" | Airport == "Seoul Incheon International Airport" | Airport == "Hamad International Airport")
+
+airportsData2022 <- airportsRawData[[5]] |>
+  select(Airport, Totalpassengers) |>
+  mutate(Totalpassengers = readr::parse_number(Totalpassengers),
+         year = 2022) |>
+  filter(Airport == "Frankfurt Airport" | Airport == "Beijing Daxing International Airport" | Airport == "Hartsfield-Jackson Atlanta International Airport" | Airport == "Singapore Changi Airport" | Airport == "Seoul Incheon International Airport" | Airport == "Hamad International Airport")
+
+airportsData2021 <- airportsRawData[[6]] |>
+  select(Airport, Totalpassengers) |>
+  mutate(Totalpassengers = readr::parse_number(Totalpassengers),
+         year = 2021) |>
+  filter(Airport == "Frankfurt Airport" | Airport == "Beijing Daxing International Airport" | Airport == "Hartsfield-Jackson Atlanta International Airport" | Airport == "Singapore Changi Airport" | Airport == "Seoul Incheon International Airport" | Airport == "Hamad International Airport")
+
+
+# Step 4: Combine data frames
+
+airportsTidy <- bind_rows(
+  airportsData2025,
+  airportsData2024,
+  airportsData2023,
+  airportsData2022,
+  airportsData2021
+) 
+
+
+ggplot(
+  data = airportsTidy, # Our tidied data
+  mapping = aes( # Define our mappings
+    x = year,
+    y = Totalpassengers,
+    color = Airport
+  )
+) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 1) +
+  labs(
+    title = "Airport Passengers by Year",
+    x = "Year",
+    y = "Passengers",
+    color = "Airport" # guides get merged into one
+)
+```
+
+**Long Description**
+The line graph demonstrates the change in passenger population across 6 different airports from 2020 to 2025. The year is displayed on the x-axis, and the passengers are displayed on the y-axis. Each line represents an airport. Based on observation, there is an overall increase in passenger population across all airports. However, Hartsfield-Jackson Atlanta International Airport has had the most passengers by a significant amount every single year.
+
+## Monte Carlo Numerical Integration
+```{r}
+numPoint <- 10
+x_lowerBound <- 0
+x_upperBound <- 10
+y_lowerBound <- 0
+y_upperBound <- 5
+xCoord <- runif(numPoint, min = x_lowerBound, max = x_upperBound)
+yCoord <- runif(numPoint, min = y_lowerBound, max = y_upperBound)
+```
+
+## Planning and Prompting GenAI Tools
+
+### My Prompt 
+
+**Results:**
+
+*Image:*
+![Detailed Prompt](genaitool1.png)
+
+### Generic Prompt
+
+**Results:**
+*Image:*
+![Generic Prompt](genericprompt.png)
+**Comparison:**
+
+Compared to the vague prompt, the detailed prompt's graph presents the data more accurately. The generic prompt doesn't specify the context very well, and it didn't represent two different groups. The labels are too vague (e.g. "Average"), so it is unclear what the context behind the graph is. It also does not do a good job at serving its purpose (**comparing** two different groups). On the other hand, the detailed and plan-based prompt actually does a good job at specifying the context (e.g. having more detailed labels) and presents the two different treatment groups separately. This allows the reader to compare the different groups over time and see if the treatment was effective or not.
+
+\{\{< pagebreak >\}\}  
+
+## Reflection
+
+From this course, I have learned how to tidy data using R, and make tables and graphs to present the data. I have also learned how to plan and make goals, and identify the needs to organize a project. For example, I can wrangle data using the functions from the data wrangling app, such as bind_rows(), select(), and filter(). This was especially helpful for tidying the diamonds data and creating a table for the cuts. I believe I did struggle in some parts and only realized how to solve certain problems a long time after I did my work, but I think this taught me the importance of reaching out for help when needed. 
+
+
+# References  
+“ChatGPT.” ChatGPT, https://chatgpt.com/. Accessed 15 Apr. 2026.
+
+**The prompt I used:**
+Tidy and wrangle the data for the file attached. The goal of this is to create a graph so that we can view the differences in ulnar calcium measurements across the years and between the two treatment groups. For context, the first four columns represent the 15 women who lived their lives as they typically did (null treatment group) and the second four columns represent the 16 women who recieved special help with their diet.
+
+*Response:*
+I’ve cleaned (“tidied”) your dataset and created a structure that’s ready for analysis and visualization, then plotted the comparison you were after.
+
+What I did to wrangle the data:
+Renamed columns to clearly separate groups:
+null_y0 … null_y3 (no treatment, 15 women)
+treat_y0 … treat_y3 (treatment, 16 women)
+Added a participant ID column
+Converted the data from wide format → long format (this is key for plotting and analysis)
+Created variables:
+id = participant
+year = 0, 1, 2, 3
+calcium = measurement
+group = Null vs Treatment
+Removed missing values (the extra row for the treatment group)
+Final tidy structure (example)
+id	year	calcium	group
+1	0	87.3	Null
+1	1	86.9	Null
+…	…	…	…
+What the graph shows
+Both groups start at different baselines (Null slightly higher)
+The treatment group increases more steadily over years 0 → 2
+The null group peaks earlier (year 1) then declines
+Both groups show a sharp drop at year 3, which is the most striking feature
+Interpretation (important insight)
+The treatment appears to:
+Stabilize or gradually improve calcium levels through year 2
+Reduce the early peak-and-decline pattern seen in the null group
+However, year 3 decline affects both groups, suggesting:
+a time-related effect (aging, measurement issue, or external factor)
+not purely treatment-driven
+If you want next steps
+
+I can:
+
+Add confidence intervals/error bars
+Plot individual trajectories (spaghetti plot)
+Run a statistical test (e.g., repeated measures ANOVA / mixed model)
+Export the cleaned dataset as CSV or Excel
+
+Just tell me 👍
+
+
+\{\{< pagebreak >\}\}  
+# Code Appendix
+```{r}
+#| label: codeAppend
+#| ref-label: !expr knitr::all_labels()
+#| echo: true
+#| eval: false
+
+```
